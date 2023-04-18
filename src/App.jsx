@@ -20,22 +20,20 @@ export class App  extends Component {
     };
     
     onFormSubmit = data => {
-        if (
-            this.state.contacts.some(
-                value => value.name.toLowerCase() === data.name.toLowerCase()
-            )
-        ) {
+        const nameInclude = this.state.contacts.find(value => value.name.toLowerCase() === data.name.toLowerCase());
+        if (nameInclude) {
             alert(`${data.name} is already in contacts.`);
             return;
         }
-        if (this.state.contacts.some(value => value.number === data.number)) {
-            const findContact = this.state.contacts.find(
-                option => option.number === data.number
-            );
+        
+        const numberInclude = this.state.contacts.find(
+                    option => option.number === data.number
+                );
+        if (numberInclude) {
             alert(
-                `${data.number} is already in contacts as ${findContact.name}.`
-            );
-            return;
+                        `${data.number} is already in contacts as ${numberInclude.name}.`
+                    );
+                    return;
         }
         this.setState(prevState => ({
             contacts: [...prevState.contacts, { ...data, id: nanoid() }],
